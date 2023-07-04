@@ -1,14 +1,22 @@
 -- Insert sample departments
-INSERT INTO departments (name) VALUES ('Sales');
-INSERT INTO departments (name) VALUES ('Marketing');
-INSERT INTO departments (name) VALUES ('Finance');
+INSERT INTO Departments (name) VALUES
+  ('Sales'),
+  ('Engineering'),
+  ('Marketing'),
+  ('Human Resources');
 
 -- Insert sample roles
-INSERT INTO roles (title, salary, department_id) VALUES ('Salesperson', 50000, 1);
-INSERT INTO roles (title, salary, department_id) VALUES ('Marketing Coordinator', 45000, 2);
-INSERT INTO roles (title, salary, department_id) VALUES ('Accountant', 60000, 3);
+INSERT INTO Roles (title, salary, departmentId) VALUES
+  ('Sales Manager', 60000, 1),
+  ('Sales Representative', 40000, 1),
+  ('Software Engineer', 80000, 2),
+  ('Marketing Coordinator', 45000, 3),
+  ('HR Manager', 70000, 4);
 
 -- Insert sample employees
-INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ('John', 'Doe', 1, NULL);
-INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ('Jane', 'Smith', 2, 1);
-INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ('Mike', 'Johnson', 3, 1);
+INSERT INTO Employees (firstName, lastName, roleId, managerId) VALUES
+  ('John', 'Doe', 1, NULL),
+  ('Jane', 'Smith', 2, 1),
+  ('Mike', 'Johnson', 2, 1),
+  ('Emily', 'Williams', 3, 2),
+  ('David', 'Brown', 4, 3);
