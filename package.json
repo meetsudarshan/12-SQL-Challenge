@@ -1,0 +1,25 @@
+{
+  "name": "12-sql-challenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meetsudarshan/12-SQL-Challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meetsudarshan/12-SQL-Challenge/issues"
+  },
+  "homepage": "https://github.com/meetsudarshan/12-SQL-Challenge#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^8.2.4",
+    "mysql": "^2.18.1"
+  }
+}
