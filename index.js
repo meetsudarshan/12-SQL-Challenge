@@ -17,17 +17,25 @@ async function viewAllDepartments() {
 }
 
 // Function to view all roles
-async function viewAllRoles() {
+const viewAllRoles = async () => {
   try {
-    const roles = await Role.findAll({ include: Department });
+    const roles = await Role.findAll({
+      include: {
+        model: Department,
+        as: 'Department', // Specify the alias as 'Department'
+      },
+    });
     console.log('Roles:');
     roles.forEach((role) => {
-      console.log(`- ${role.title} (${role.Department.name}) - Salary: ${role.salary}`);
+      const departmentName = role.Department ? role.Department.name : 'No department';
+      console.log(`- ${role.title} (${departmentName}) - Salary: ${role.salary}`);
     });
   } catch (error) {
     console.error('Error retrieving roles:', error);
   }
-}
+};
+
+
 
 // Function to view all employees
 // async function viewAllEmployees() {
@@ -51,6 +59,57 @@ async function viewAllRoles() {
 //   }
 // }
 // Function to view all employees
+// const viewAllEmployees = async () => {
+//   try {
+//     const employees = await Employee.findAll({
+//       attributes: [
+//         'id',
+//         'firstName',
+//         'lastName',
+//         'createdAt',
+//         'updatedAt',
+//         'roleId',
+//         'managerId',
+//       ],
+//       include: [
+//         {
+//           model: Role,
+//           as: 'role',
+//           attributes: [
+//             'id',
+//             'title',
+//             'salary',
+//             'DepartmentId',
+//           ],
+//           include: {
+//             model: Department,
+//             as: 'Department', // Specify the alias as 'Department'
+//             attributes: ['id', 'name'],
+//           },
+//         },
+//         {
+//           model: Employee,
+//           as: 'manager',
+//           attributes: [
+//             'id',
+//             'firstName',
+//             'lastName',
+//             'createdAt',
+//             'updatedAt',
+//             'roleId',
+//             'managerId',
+//           ],
+//         },
+//       ],
+//     });
+
+//     // Rest of the code...
+//   } catch (error) {
+//     console.log('Error retrieving employees:', error);
+//   }
+// };
+
+//Function to view all employees
 const viewAllEmployees = async () => {
   try {
     const employees = await Employee.findAll({
@@ -60,8 +119,6 @@ const viewAllEmployees = async () => {
         'lastName',
         'createdAt',
         'updatedAt',
-        'roleId',
-        'managerId',
       ],
       include: [
         {
@@ -71,11 +128,10 @@ const viewAllEmployees = async () => {
             'id',
             'title',
             'salary',
-            'DepartmentId',
           ],
           include: {
             model: Department,
-            as: 'Department', // Specify the alias as 'Department'
+            as: 'Department',
             attributes: ['id', 'name'],
           },
         },
@@ -86,20 +142,29 @@ const viewAllEmployees = async () => {
             'id',
             'firstName',
             'lastName',
-            'createdAt',
-            'updatedAt',
-            'roleId',
-            'managerId',
           ],
         },
       ],
     });
 
-    // Rest of the code...
+    employees.forEach((employee) => {
+      console.log(`ID: ${employee.id}`);
+      console.log(`Name: ${employee.firstName} ${employee.lastName}`);
+      console.log(`Role: ${employee.role.title}`);
+      console.log(`Salary: ${employee.role.salary}`);
+      console.log(`Department: ${employee.role.Department.name}`);
+      if (employee.manager) {
+        console.log(`Manager: ${employee.manager.firstName} ${employee.manager.lastName}`);
+      }
+      console.log('----------------------');
+    });
+
+    // startApp();
   } catch (error) {
     console.log('Error retrieving employees:', error);
   }
 };
+
 
 
 
@@ -170,6 +235,10 @@ const addEmployee = async () => {
       attributes: ['id', 'name'],
     });
 
+    const employees = await Employee.findAll({
+      attributes: ['id', 'firstName', 'lastName'],
+    });
+
     const roleChoices = roles.map((role) => ({
       name: role.title,
       value: role.id,
@@ -180,11 +249,50 @@ const addEmployee = async () => {
       value: department.id,
     }));
 
-    // Rest of the code...
+    const employeeChoices = employees.map((employee) => ({
+      name: `${employee.firstName} ${employee.lastName}`,
+      value: employee.id,
+    }));
+
+    const employeeData = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'firstName',
+        message: "Enter the employee's first name:",
+        validate: (input) => (input ? true : "First name cannot be empty"),
+      },
+      {
+        type: 'input',
+        name: 'lastName',
+        message: "Enter the employee's last name:",
+        validate: (input) => (input ? true : "Last name cannot be empty"),
+      },
+      {
+        type: 'list',
+        name: 'roleId',
+        message: "Select the employee's role:",
+        choices: roleChoices,
+      },
+      {
+        type: 'list',
+        name: 'managerId',
+        message: "Select the employee's manager:",
+        choices: employeeChoices,
+      },
+    ]);
+
+    // Create the new employee using the retrieved data
+    const newEmployee = await Employee.create(employeeData);
+    console.log('New employee added successfully.');
+
+    // Call the startApp function to display the main menu again
+    // startApp();
   } catch (error) {
     console.log('Error adding employee:', error);
   }
 };
+
+
 
 
 // Function to update an employee's role
@@ -192,11 +300,15 @@ async function updateEmployeeRole() {
   try {
     const employees = await Employee.findAll();
     const employeeChoices = employees.map((employee) => ({
-      name: `${employee.firstName} ${employee.lastName} (${employee.role.title}, ${employee.Department.name})`,
+      name: `${employee.firstName} ${employee.lastName}`,
       value: employee.id,
     }));
 
-    const roles = await Role.findAll();
+    const roles = await Role.findAll({
+      attributes: ['id', 'title'],
+      include: { model: Department, as: 'Department' },
+    });
+
     const roleChoices = roles.map((role) => ({
       name: `${role.title} (${role.Department.name})`,
       value: role.id,
@@ -220,11 +332,16 @@ async function updateEmployeeRole() {
     const updatedEmployee = await Employee.findByPk(employeeRoleData.employeeId);
     await updatedEmployee.update({ roleId: employeeRoleData.roleId });
 
-    console.log(`Employee role updated successfully.`);
+    console.log('Employee role updated successfully.');
+
+    // Call the startApp function to display the main menu again
+    // startApp();
   } catch (error) {
     console.error('Error updating employee role:', error);
   }
 }
+
+
 
 // Function to exit the application
 function exitApp() {
@@ -247,7 +364,7 @@ async function main() {
           { name: 'Add a department', value: 'addDepartment' },
           { name: 'Add a role', value: 'addRole' },
           { name: 'Add an employee', value: 'addEmployee' },
-          { name: 'Update an employee role', value: 'updateEmployeeRole' },
+          // { name: 'Update an employee role', value: 'updateEmployeeRole' },
           { name: 'Exit', value: 'exit' },
         ],
       },
