@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Hflora2010/Employee-Tracker.git"
+    "url": "git+https://github.com/meetsudarshan/12-SQL-Challenge"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Hflora2010/Employee-Tracker/issues"
+    "url": "https://github.com/meetsudarshan/12-SQL-Challenge"
   },
-  "homepage": "https://github.com/Hflora2010/Employee-Tracker#readme",
+  "homepage": "https://github.com/meetsudarshan/12-SQL-Challenge#readme",
   "dependencies": {
     "dotenv": "^16.0.3",
     "inquirer": "^8.2.5",
