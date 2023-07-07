@@ -15,8 +15,8 @@ INSERT INTO Roles (title, salary, departmentId) VALUES
 
 -- Insert sample employees
 INSERT INTO Employees (firstName, lastName, roleId, managerId) VALUES
-  ('John', 'Doe', 1, NULL),
-  ('Jane', 'Smith', 2, 1),
-  ('Mike', 'Johnson', 2, 1),
-  ('Emily', 'Williams', 3, 2),
-  ('David', 'Brown', 4, 3);
+  ('Sudarshan', 'Samaddar', 1, NULL),
+  ('Sami', 'Saqib', 2, 1),
+  ('Muhammad', 'Usman', 2, 1),
+  ('Usman', 'Jamal', 3, 2),
+  ('Ammar', 'Zaidi', 4, 3);
