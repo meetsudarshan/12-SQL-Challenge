@@ -1,5 +1,10 @@
 # 12-SQL-Challenge
 
+![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
+![express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![insomnia](https://img.shields.io/badge/Insomnia-5849be?style=for-the-badge&logo=Insomnia&logoColor=white)
+
+
 ## User Story
 
 ```md
@@ -29,3 +34,7 @@ THEN I am prompted to enter the employee’s first name, last name, role, and ma
 WHEN I choose to update an employee role
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
 ```
+
+## Visual
+
+[![]](https://drive.google.com/file/d/12IJIDB5t8xRQoIB6DqPWeriTFRuXn3sk/view)

@@ -37,76 +37,7 @@ const viewAllRoles = async () => {
 
 
 
-// Function to view all employees
-// async function viewAllEmployees() {
-//   try {
-//     const employees = await Employee.findAll({
-//       include: [
-//         { model: Role, as: 'role', include: Department },
-//         { model: Employee, as: 'manager' },
-//       ],
-//     });
-//     console.log('Employees:');
-//     employees.forEach((employee) => {
-//       console.log(
-//         `- ${employee.firstName} ${employee.lastName} (${employee.role.title}, ${employee.Department.name}) - Manager: ${
-//           employee.manager ? `${employee.manager.firstName} ${employee.manager.lastName}` : 'None'
-//         }`
-//       );
-//     });
-//   } catch (error) {
-//     console.error('Error retrieving employees:', error);
-//   }
-// }
-// Function to view all employees
-// const viewAllEmployees = async () => {
-//   try {
-//     const employees = await Employee.findAll({
-//       attributes: [
-//         'id',
-//         'firstName',
-//         'lastName',
-//         'createdAt',
-//         'updatedAt',
-//         'roleId',
-//         'managerId',
-//       ],
-//       include: [
-//         {
-//           model: Role,
-//           as: 'role',
-//           attributes: [
-//             'id',
-//             'title',
-//             'salary',
-//             'DepartmentId',
-//           ],
-//           include: {
-//             model: Department,
-//             as: 'Department', // Specify the alias as 'Department'
-//             attributes: ['id', 'name'],
-//           },
-//         },
-//         {
-//           model: Employee,
-//           as: 'manager',
-//           attributes: [
-//             'id',
-//             'firstName',
-//             'lastName',
-//             'createdAt',
-//             'updatedAt',
-//             'roleId',
-//             'managerId',
-//           ],
-//         },
-//       ],
-//     });
 
-//     // Rest of the code...
-//   } catch (error) {
-//     console.log('Error retrieving employees:', error);
-//   }
 // };
 
 //Function to view all employees
@@ -402,3 +333,75 @@ async function main() {
 
 // Run the main function
 main();
+
+
+// Function to view all employees
+// async function viewAllEmployees() {
+//   try {
+//     const employees = await Employee.findAll({
+//       include: [
+//         { model: Role, as: 'role', include: Department },
+//         { model: Employee, as: 'manager' },
+//       ],
+//     });
+//     console.log('Employees:');
+//     employees.forEach((employee) => {
+//       console.log(
+//         `- ${employee.firstName} ${employee.lastName} (${employee.role.title}, ${employee.Department.name}) - Manager: ${
+//           employee.manager ? `${employee.manager.firstName} ${employee.manager.lastName}` : 'None'
+//         }`
+//       );
+//     });
+//   } catch (error) {
+//     console.error('Error retrieving employees:', error);
+//   }
+// }
+// Function to view all employees
+// const viewAllEmployees = async () => {
+//   try {
+//     const employees = await Employee.findAll({
+//       attributes: [
+//         'id',
+//         'firstName',
+//         'lastName',
+//         'createdAt',
+//         'updatedAt',
+//         'roleId',
+//         'managerId',
+//       ],
+//       include: [
+//         {
+//           model: Role,
+//           as: 'role',
+//           attributes: [
+//             'id',
+//             'title',
+//             'salary',
+//             'DepartmentId',
+//           ],
+//           include: {
+//             model: Department,
+//             as: 'Department', // Specify the alias as 'Department'
+//             attributes: ['id', 'name'],
+//           },
+//         },
+//         {
+//           model: Employee,
+//           as: 'manager',
+//           attributes: [
+//             'id',
+//             'firstName',
+//             'lastName',
+//             'createdAt',
+//             'updatedAt',
+//             'roleId',
+//             'managerId',
+//           ],
+//         },
+//       ],
+//     });
+
+//     // Rest of the code...
+//   } catch (error) {
+//     console.log('Error retrieving employees:', error);
+//   }
